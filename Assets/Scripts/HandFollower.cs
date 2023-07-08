@@ -19,12 +19,15 @@ public class HandFollower : MonoBehaviour
             transform.position = curPosition;
             yield return new WaitForFixedUpdate();
         }
+        //gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         distance = collision.transform.position - transform.position;
         collision.GetComponent<Rigidbody2D>().isKinematic = false;
-        collision.GetComponent<Rigidbody2D>().velocity = touchVelocity * distance;
+        if(collision.GetComponent<MainBodyController>())
+            collision.GetComponent<Rigidbody2D>().velocity = touchVelocity * distance / 6.0f;
+        else collision.GetComponent<Rigidbody2D>().velocity = touchVelocity * distance;
     }
 }
