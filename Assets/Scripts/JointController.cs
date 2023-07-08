@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class JointController : MonoBehaviour
 {
@@ -18,8 +19,14 @@ public class JointController : MonoBehaviour
         GetComponent<LineRenderer>().SetPosition(0, transform.position);
         GetComponent<LineRenderer>().SetPosition(1, (transform.position + connectedPart.transform.position) / 2);
         GetComponent<LineRenderer>().SetPosition(2, connectedPart.transform.position);
+
+        Vector3 rotateDir = connectedPart.transform.position - transform.position;
+        Quaternion quaternion = Quaternion.FromToRotation(Vector3.up, rotateDir);
+        transform.rotation = quaternion;
+
         if ((connectedPart.transform.position - transform.position).magnitude >= maxDistance)
         {
+           // GetComponent<Rigidbody2D>().velocity *= -1.0f;
             StartCoroutine(nameof(SpeedDown));
         }
     }
@@ -36,7 +43,8 @@ public class JointController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.name != "Needle" && collision.gameObject.tag != "Joint")
+        if(collision.name != "Needle" && collision.gameObject.tag != "Joint"
+             && collision.gameObject.tag != "Player")
         {
             GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             GetComponent<Rigidbody2D>().isKinematic = true;
@@ -45,6 +53,7 @@ public class JointController : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (EventSystem.current.IsPointerOverGameObject()) return;
         Vector3 screenSpace = Camera.main.WorldToScreenPoint(transform.position);
         var offset = transform.position - Camera.main.ScreenToWorldPoint(new
             Vector3(Input.mousePosition.x, Input.mousePosition.y, screenSpace.z));

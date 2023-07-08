@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Joint
+  - Enemy
+  - Reward
   layers:
   - Default
   - TransparentFX
@@ -39,8 +41,14 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: MapLow
+    uniqueID: 2644987771
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: MapHigh
+    uniqueID: 3553751855
     locked: 0
   - name: UI
     uniqueID: 3919779497

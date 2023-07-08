@@ -1,12 +1,59 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HandFollower : MonoBehaviour
 {
     public float touchVelocity;
     private Vector2 distance;
-    //拖拽功能的实现，该函数可应用到任何脚本中
+    private bool autoFollowing;
+    public Transform waitingPos;
+
+    public Button modeChangeBtn;
+    public Text modeNowText;
+
+    private void Start()
+    {
+        waitOutside();
+        modeChangeBtn.onClick.AddListener(() =>
+        {
+            if (autoFollowing) waitOutside();
+            else
+            {
+                autoFollowing = true;
+                modeNowText.text = "刺激: 触点应激弹飞";
+            }
+        });
+    }
+
+    private void Update()
+    {
+        if (Time.timeScale == 0) waitOutside();
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (autoFollowing) waitOutside();
+            else
+            {
+                autoFollowing = true;
+                modeNowText.text = "刺激: 触点应激弹飞";
+            }
+        }
+        if (autoFollowing)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            transform.position = ray.GetPoint(10);
+        }
+    }
+
+    public void waitOutside()
+    {
+        autoFollowing = false;
+        transform.position = waitingPos.position;
+        modeNowText.text = "安抚: 触点放弃抓握";
+    }
+
+    /*//拖拽功能的实现，该函数可应用到任何脚本中
     IEnumerator OnMouseDown()
     {
         Vector3 screenSpace = Camera.main.WorldToScreenPoint(transform.position);//三维物体坐标转屏幕坐标
@@ -20,7 +67,7 @@ public class HandFollower : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
         //gameObject.SetActive(false);
-    }
+    }*/
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
