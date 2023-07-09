@@ -10,6 +10,8 @@ public class FloatingTitle : MonoBehaviour
     public float zhenFu = 10f;//Õñ·ù
     public float HZ = 1f;//ÆµÂÊ
 
+    public bool axisY = true;
+
     private void Awake()
     {
         trans1 = transform.position;
@@ -18,7 +20,8 @@ public class FloatingTitle : MonoBehaviour
     private void Update()
     {
         trans2 = trans1;
-        trans2.y = Mathf.Sin(Time.fixedTime * Mathf.PI * HZ) * zhenFu + trans1.y;
+        if(axisY) trans2.y = Mathf.Sin(Time.fixedTime * Mathf.PI * HZ) * zhenFu + trans1.y;
+        else trans2.x = Mathf.Sin(Time.fixedTime * Mathf.PI * HZ) * zhenFu + trans1.x;
 
         transform.position = trans2;
     }

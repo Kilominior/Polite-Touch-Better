@@ -48,7 +48,10 @@ public class MainBodyController : MonoBehaviour
     {
         if (EventSystem.current.IsPointerOverGameObject()) return;
         GetComponent<Rigidbody2D>().isKinematic = false;
-        foreach(var p in bodyParts) p.GetComponent<Rigidbody2D>().isKinematic = false;
+        foreach (var p in bodyParts)
+        {
+            if(p.activeSelf) p.GetComponent<JointController>().releaseHand();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -11,6 +11,8 @@ public class HandFollower : MonoBehaviour
     public Transform waitingPos;
 
     public Button modeChangeBtn;
+    public Sprite mode1;
+    public Sprite mode2;
     public Text modeNowText;
 
     private void Start()
@@ -22,6 +24,7 @@ public class HandFollower : MonoBehaviour
             else
             {
                 autoFollowing = true;
+                modeChangeBtn.image.sprite = mode1;
                 modeNowText.text = "´Ì¼¤: ´¥µãÓ¦¼¤µ¯·É";
             }
         });
@@ -36,6 +39,7 @@ public class HandFollower : MonoBehaviour
             else
             {
                 autoFollowing = true;
+                modeChangeBtn.image.sprite = mode1;
                 modeNowText.text = "´Ì¼¤: ´¥µãÓ¦¼¤µ¯·É";
             }
         }
@@ -50,6 +54,7 @@ public class HandFollower : MonoBehaviour
     {
         autoFollowing = false;
         transform.position = waitingPos.position;
+        modeChangeBtn.image.sprite = mode2;
         modeNowText.text = "°²¸§: ´¥µã·ÅÆú×¥ÎÕ";
     }
 

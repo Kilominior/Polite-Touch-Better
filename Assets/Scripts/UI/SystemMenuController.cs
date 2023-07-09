@@ -154,7 +154,7 @@ public class SystemMenuController: MonoBehaviour
 
     private IEnumerator deadWait()
     {
-        yield return new WaitForSecondsRealtime(1.0f);
+        yield return new WaitForSecondsRealtime(0.6f);
         OnPause();
         deadMenu.SetActive(true);
     }

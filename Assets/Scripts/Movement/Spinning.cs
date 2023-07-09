@@ -20,7 +20,7 @@ public class Spinning : MonoBehaviour
     void Update()
     {
         if(isClockwise) transform.Rotate(Vector3.forward, -rotateSpeed);
-        else transform.Rotate(Vector3.up, rotateSpeed);
+        else transform.Rotate(Vector3.forward, rotateSpeed);
         if (withScale)
         {
             float scaleNow = (Mathf.Sin(Time.fixedTime * Mathf.PI * HZ)) * minSize + defaultScale;
