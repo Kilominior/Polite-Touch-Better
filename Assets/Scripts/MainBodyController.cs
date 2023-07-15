@@ -21,7 +21,7 @@ public class MainBodyController : MonoBehaviour
 
     public SystemMenuController systemMenu;
 
-    private void Start()
+    private void Awake()
     {
         invincibleCircle.SetActive(false);
         invincible = false;

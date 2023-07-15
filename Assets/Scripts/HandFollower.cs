@@ -9,6 +9,8 @@ public class HandFollower : MonoBehaviour
     private Vector2 distance;
     private bool autoFollowing;
     public Transform waitingPos;
+    private DirFollower dirFollower;
+    private Sprite[] DirSprites;
 
     public Button modeChangeBtn;
     public Sprite mode1;
@@ -17,16 +19,15 @@ public class HandFollower : MonoBehaviour
 
     private void Start()
     {
-        waitOutside();
+        DirSprites = new Sprite[2];
+        DirSprites[0] = Resources.Load<Sprite>("LevelObjects/Dir");
+        DirSprites[1] = Resources.Load<Sprite>("LevelObjects/DirSoft");
+        dirFollower = GetComponent<DirFollower>();
+        keepFollowing();
         modeChangeBtn.onClick.AddListener(() =>
         {
             if (autoFollowing) waitOutside();
-            else
-            {
-                autoFollowing = true;
-                modeChangeBtn.image.sprite = mode1;
-                modeNowText.text = "刺激: 触点应激弹飞";
-            }
+            else keepFollowing();
         });
     }
 
@@ -36,12 +37,7 @@ public class HandFollower : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (autoFollowing) waitOutside();
-            else
-            {
-                autoFollowing = true;
-                modeChangeBtn.image.sprite = mode1;
-                modeNowText.text = "刺激: 触点应激弹飞";
-            }
+            else keepFollowing();
         }
         if (autoFollowing)
         {
@@ -50,12 +46,23 @@ public class HandFollower : MonoBehaviour
         }
     }
 
+    public void keepFollowing()
+    {
+        autoFollowing = true;
+        modeChangeBtn.image.sprite = mode1;
+        modeNowText.text = "刺激: 触点应激弹飞";
+        foreach (var d in dirFollower.dirs)
+            d.GetComponent<SpriteRenderer>().sprite = DirSprites[0];
+    }
+
     public void waitOutside()
     {
         autoFollowing = false;
         transform.position = waitingPos.position;
         modeChangeBtn.image.sprite = mode2;
         modeNowText.text = "安抚: 触点放弃抓握";
+        foreach (var d in dirFollower.dirs)
+            d.GetComponent<SpriteRenderer>().sprite = DirSprites[1];
     }
 
     /*//拖拽功能的实现，该函数可应用到任何脚本中
