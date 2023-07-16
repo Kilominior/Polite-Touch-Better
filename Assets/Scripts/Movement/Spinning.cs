@@ -19,6 +19,7 @@ public class Spinning : MonoBehaviour
 
     void Update()
     {
+        if (Time.timeScale == 0) return;
         if(isClockwise) transform.Rotate(Vector3.forward, -rotateSpeed);
         else transform.Rotate(Vector3.forward, rotateSpeed);
         if (withScale)

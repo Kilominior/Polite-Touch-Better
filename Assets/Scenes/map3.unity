@@ -7167,7 +7167,7 @@ RectTransform:
   - {fileID: 1483041946}
   - {fileID: 1054538414}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -8576,7 +8576,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!212 &479374316
 SpriteRenderer:
@@ -8677,6 +8677,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bodyParent: {fileID: 208152835}
   bodyParts: []
+  spritePrefab: {fileID: 8670581812410890713, guid: fd6bc354a8609634f9bbbddd7714936a, type: 3}
   damagedVelocity: 60
   invincibleCircle: {fileID: 1577971236}
   systemMenu: {fileID: 1054538415}
@@ -9445,7 +9446,7 @@ Transform:
   - {fileID: 62160353}
   - {fileID: 223271186}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &724819946
 GameObject:
@@ -9799,7 +9800,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!212 &908085648
 SpriteRenderer:
@@ -9900,6 +9901,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 475862e353581c5439137f6b2edd2339, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mySpriteLayer: {fileID: 0}
   maxDistance: 6
 --- !u!58 &908085653
 CircleCollider2D:
@@ -10288,6 +10290,7 @@ GameObject:
   - component: {fileID: 969861349}
   - component: {fileID: 969861348}
   - component: {fileID: 969861351}
+  - component: {fileID: 969861352}
   m_Layer: 0
   m_Name: Needle
   m_TagString: Untagged
@@ -10396,6 +10399,23 @@ MonoBehaviour:
   mode1: {fileID: 21300000, guid: 9fa46c1036bcf16489790dcd061f1175, type: 3}
   mode2: {fileID: 21300000, guid: 53a4854d71be5fe428231ce4d9d47df7, type: 3}
   modeNowText: {fileID: 370332046}
+--- !u!114 &969861352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 969861347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3169d990d290164c9710e8b791af78a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DirPrefab: {fileID: 6215332139529255952, guid: 6caaa2c8b7cfb0e448eec2221ba7b6ab, type: 3}
+  DirParent: {fileID: 1516981599}
+  dirs: []
+  mainBodyController: {fileID: 479374321}
+  followingObjs: []
 --- !u!1 &972951994
 GameObject:
   m_ObjectHideFlags: 0
@@ -11348,7 +11368,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!212 &1252527639
 SpriteRenderer:
@@ -11449,6 +11469,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 475862e353581c5439137f6b2edd2339, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mySpriteLayer: {fileID: 0}
   maxDistance: 10
 --- !u!58 &1252527644
 CircleCollider2D:
@@ -11625,7 +11646,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!212 &1293617489
 SpriteRenderer:
@@ -11726,6 +11747,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 475862e353581c5439137f6b2edd2339, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mySpriteLayer: {fileID: 0}
   maxDistance: 2
 --- !u!58 &1293617494
 CircleCollider2D:
@@ -17903,7 +17925,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1483041945
 GameObject:
@@ -18022,7 +18044,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!212 &1489041380
 SpriteRenderer:
@@ -18123,6 +18145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 475862e353581c5439137f6b2edd2339, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mySpriteLayer: {fileID: 0}
   maxDistance: 10
 --- !u!58 &1489041385
 CircleCollider2D:
@@ -18334,6 +18357,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1489341584}
   m_CullTransparentMesh: 1
+--- !u!1 &1516981599
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1516981600}
+  m_Layer: 0
+  m_Name: Dirs
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1516981600
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1516981599}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 11.524747, y: 3.3424425, z: 0.48586428}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1544306629
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18607,7 +18661,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!212 &1586143824
 SpriteRenderer:
@@ -18708,6 +18762,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 475862e353581c5439137f6b2edd2339, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mySpriteLayer: {fileID: 0}
   maxDistance: 6
 --- !u!58 &1586143829
 CircleCollider2D:
@@ -18906,7 +18961,7 @@ Transform:
   - {fileID: 171683770}
   - {fileID: 57209611}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1621120752
 GameObject:
@@ -20162,7 +20217,7 @@ Transform:
   - {fileID: 1385742303}
   - {fileID: 7595308}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2051855868
 PrefabInstance:

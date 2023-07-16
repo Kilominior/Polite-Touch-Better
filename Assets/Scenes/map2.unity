@@ -5384,7 +5384,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!212 &479374316
 SpriteRenderer:
@@ -5485,6 +5485,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bodyParent: {fileID: 208152835}
   bodyParts: []
+  spritePrefab: {fileID: 8670581812410890713, guid: fd6bc354a8609634f9bbbddd7714936a, type: 3}
   damagedVelocity: 60
   invincibleCircle: {fileID: 1577971236}
   systemMenu: {fileID: 1054538415}
@@ -6594,7 +6595,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!212 &908085648
 SpriteRenderer:
@@ -7009,6 +7010,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DirPrefab: {fileID: 6215332139529255952, guid: 6caaa2c8b7cfb0e448eec2221ba7b6ab, type: 3}
   DirParent: {fileID: 1815402099}
+  dirs: []
   mainBodyController: {fileID: 479374321}
   followingObjs: []
 --- !u!1 &972951994
@@ -7794,7 +7796,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!212 &1252527639
 SpriteRenderer:
@@ -8128,7 +8130,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!212 &1293617489
 SpriteRenderer:
@@ -15985,7 +15987,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!212 &1489041380
 SpriteRenderer:
@@ -16579,7 +16581,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!212 &1586143824
 SpriteRenderer:

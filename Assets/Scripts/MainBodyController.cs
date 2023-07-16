@@ -10,6 +10,7 @@ public class MainBodyController : MonoBehaviour
     public GameObject[] bodyParts;
     private int bodyExistCount;
     private bool[] bodyExist;
+    public GameObject spritePrefab;
 
     public float damagedVelocity;
 
@@ -89,6 +90,7 @@ public class MainBodyController : MonoBehaviour
             int getOne = getIndex[Random.Range(0, 6 - bodyExistCount)];
             bodyParts[getOne].transform.position = transform.position;
             bodyParts[getOne].SetActive(true);
+            bodyParts[getOne].GetComponent<JointController>().mySpriteLayer.SetActive(true);
             bodyExist[getOne] = true;
         }
     }
@@ -117,7 +119,10 @@ public class MainBodyController : MonoBehaviour
                 }
             }
             int disappearOne = disappearIndex[Random.Range(0, bodyExistCount + 1)];
+            if (bodyParts[disappearOne].transform.parent != bodyParent.transform)
+                bodyParts[disappearOne].GetComponent<JointController>().releaseFromConnectedObj(bodyParent.transform);
             bodyParts[disappearOne].SetActive(false);
+            bodyParts[disappearOne].GetComponent<JointController>().mySpriteLayer.SetActive(false);
             bodyExist[disappearOne] = false;
         }
     }
