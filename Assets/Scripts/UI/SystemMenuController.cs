@@ -67,6 +67,52 @@ public class SystemMenuController: MonoBehaviour
         });
 
 
+        if (GameManager.language == GameManager.Language.EN)
+        {
+            TitleText0.text = "MENU";
+            musicText.text = "music";
+            audioText.text = "sfx";
+
+            TitleText1.text = "Congratulations!";
+            MenuText1.text = "You Finished This Level! \nYou Have Received Pigment Supplies.";
+
+            TitleText2.text = "He's Dead...";
+            MenuText2.text = "Chameleons Need You! \nTry Again?";
+
+            BackMainMenuBtn0.transform.GetChild(0).GetComponent<Text>().text = "Main Menu";
+            BackMainMenuBtn1.transform.GetChild(0).GetComponent<Text>().text = "Main Menu";
+            BackMainMenuBtn2.transform.GetChild(0).GetComponent<Text>().text = "Main Menu";
+
+            RetryBtn0.transform.GetChild(0).GetComponent<Text>().text = "Try Again";
+            RetryBtn1.transform.GetChild(0).GetComponent<Text>().text = "Try Again";
+            RetryBtn2.transform.GetChild(0).GetComponent<Text>().text = "Try Again";
+
+            ReturnBtn.transform.GetChild(0).GetComponent<Text>().text = "Continue";
+            NextLevelBtn.transform.GetChild(0).GetComponent<Text>().text = "Next Level";
+        }
+        else if (GameManager.language == GameManager.Language.CH)
+        {
+            TitleText0.text = "菜单";
+            musicText.text = "音乐";
+            audioText.text = "音效";
+
+            TitleText1.text = "过关！";
+            MenuText1.text = "你在补给点补充了颜料，\n继续前进吧！";
+
+            TitleText2.text = "倒下...";
+            MenuText2.text = "蜥裔的希望全在你身上了，\n打起精神再试一次吧？";
+
+            BackMainMenuBtn0.transform.GetChild(0).GetComponent<Text>().text = "主菜单";
+            BackMainMenuBtn1.transform.GetChild(0).GetComponent<Text>().text = "主菜单";
+            BackMainMenuBtn2.transform.GetChild(0).GetComponent<Text>().text = "主菜单";
+
+            RetryBtn0.transform.GetChild(0).GetComponent<Text>().text = "重试";
+            RetryBtn1.transform.GetChild(0).GetComponent<Text>().text = "重试";
+            RetryBtn2.transform.GetChild(0).GetComponent<Text>().text = "重试";
+
+            ReturnBtn.transform.GetChild(0).GetComponent<Text>().text = "继续游戏";
+            NextLevelBtn.transform.GetChild(0).GetComponent<Text>().text = "下一关";
+        }
 
 
         // 暂停弹窗
@@ -143,20 +189,20 @@ public class SystemMenuController: MonoBehaviour
 
     public void OnFinish()
     {
-        OnPause();
-        finishMenu.SetActive(true);
+        StartCoroutine(nameof(popWait), false);
     }
 
     public void OnDead()
     {
-        StartCoroutine(nameof(deadWait));
+        StartCoroutine(nameof(popWait), true);
     }
 
-    private IEnumerator deadWait()
+    private IEnumerator popWait(bool isDead)
     {
         yield return new WaitForSecondsRealtime(0.6f);
         OnPause();
-        deadMenu.SetActive(true);
+        if(isDead) deadMenu.SetActive(true);
+        else finishMenu.SetActive(true);
     }
 }
 

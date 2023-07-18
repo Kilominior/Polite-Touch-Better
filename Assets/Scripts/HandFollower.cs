@@ -34,7 +34,7 @@ public class HandFollower : MonoBehaviour
     private void Update()
     {
         if (Time.timeScale == 0) waitOutside();
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetMouseButtonDown(1))
         {
             if (autoFollowing) waitOutside();
             else keepFollowing();
