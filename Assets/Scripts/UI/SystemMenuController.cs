@@ -18,8 +18,10 @@ public class SystemMenuController: MonoBehaviour
     public Button BackMainMenuBtn0;
     public Button RetryBtn0;
     public Button ReturnBtn;
-    public Slider MusicSlider;
     public Slider AudioSlider;
+    public Slider SfxSlider;
+    public AudioSource audioSource;
+    public AudioSource sfxSource;
 
     public GameObject finishMenu;
 
@@ -38,7 +40,7 @@ public class SystemMenuController: MonoBehaviour
 
     void Start()
     {
-
+        Debug.Log("<场景加载>:当前场景为" + SceneManager.GetActiveScene().buildIndex);
         Time.timeScale = 1;
         pauseMenu.SetActive(false);
         finishMenu.SetActive(false);
@@ -74,10 +76,11 @@ public class SystemMenuController: MonoBehaviour
             audioText.text = "sfx";
 
             TitleText1.text = "Congratulations!";
-            MenuText1.text = "You Finished This Level! \nYou Have Received Pigment Supplies.";
+            MenuText1.text = "You Finished Level" + SceneManager.GetActiveScene().buildIndex
+                + "! \nHe Should Be Grateful!";
 
-            TitleText2.text = "He's Dead...";
-            MenuText2.text = "Chameleons Need You! \nTry Again?";
+            TitleText2.text = "Failed...";
+            MenuText2.text = "He Needs Your Help! \nTry Again?";
 
             BackMainMenuBtn0.transform.GetChild(0).GetComponent<Text>().text = "Main Menu";
             BackMainMenuBtn1.transform.GetChild(0).GetComponent<Text>().text = "Main Menu";
@@ -97,10 +100,11 @@ public class SystemMenuController: MonoBehaviour
             audioText.text = "音效";
 
             TitleText1.text = "过关！";
-            MenuText1.text = "你在补给点补充了颜料，\n继续前进吧！";
+            MenuText1.text = "恭喜通过第" + SceneManager.GetActiveScene().buildIndex
+                + "关！\n就知道你是真心想帮忙！";
 
-            TitleText2.text = "倒下...";
-            MenuText2.text = "蜥裔的希望全在你身上了，\n打起精神再试一次吧？";
+            TitleText2.text = "失败...";
+            MenuText2.text = "他需要你的帮助，\n再试一次吧？";
 
             BackMainMenuBtn0.transform.GetChild(0).GetComponent<Text>().text = "主菜单";
             BackMainMenuBtn1.transform.GetChild(0).GetComponent<Text>().text = "主菜单";
@@ -161,6 +165,22 @@ public class SystemMenuController: MonoBehaviour
         });
 
 
+        AudioSlider.value = GameManager.audioVolume;
+        SfxSlider.value = GameManager.sfxVolume;
+        audioSource.volume = GameManager.audioVolume;
+        //sfxSource.volume = GameManager.sfxVolume;
+
+        AudioSlider.onValueChanged.AddListener((float value) =>
+        {
+            GameManager.audioVolume = value;
+            audioSource.volume = value;
+        });
+
+        SfxSlider.onValueChanged.AddListener((float value) =>
+        {
+            GameManager.sfxVolume = value;
+            //sfxSource.volume = value;
+        });
     }
 
     public void OnPause()
@@ -201,8 +221,13 @@ public class SystemMenuController: MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(0.6f);
         OnPause();
-        if(isDead) deadMenu.SetActive(true);
-        else finishMenu.SetActive(true);
+        if (isDead) deadMenu.SetActive(true);
+        else
+        {
+            if (GameManager.levelProgress <= SceneManager.GetActiveScene().buildIndex)
+                GameManager.levelProgress++;
+            finishMenu.SetActive(true);
+        }
     }
 }
 

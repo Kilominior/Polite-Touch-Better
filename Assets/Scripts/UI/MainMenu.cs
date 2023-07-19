@@ -20,13 +20,17 @@ public class MainMenu : MonoBehaviour
     public Button level1Btn;
     public Button level2Btn;
     public Button level3Btn;
+    public Image titleImage;
+    public Sprite titleCH;
+    public Sprite titleEN;
 
     private void Start()
     {
         levelChoosePage.SetActive(false);
         startBtn.onClick.AddListener(() =>
         {
-            levelChoosePage.SetActive(true);
+            if (levelChoosePage.activeInHierarchy) levelChoosePage.SetActive(false);
+            else levelChoosePage.SetActive(true);
         });
 
         ExitBtn.onClick.AddListener(() =>
@@ -46,6 +50,7 @@ public class MainMenu : MonoBehaviour
             exitText1.text = "退出游戏";
             languageText0.text = "中文/English";
             languageText1.text = "中文/English";
+            titleImage.sprite = titleCH;
         }
         else if(GameManager.language == GameManager.Language.EN)
         {
@@ -55,6 +60,7 @@ public class MainMenu : MonoBehaviour
             exitText1.text = "Exit";
             languageText0.text = "English/中文";
             languageText1.text = "English/中文";
+            titleImage.sprite = titleEN;
         }
 
         languageBtn.onClick.AddListener(() =>
@@ -64,6 +70,28 @@ public class MainMenu : MonoBehaviour
             else GameManager.language = GameManager.Language.EN;
             SceneManager.LoadScene(0);
         });
+
+        if(GameManager.levelProgress == 1)
+        {
+            level1Btn.interactable = false;
+            level2Btn.interactable = false;
+            level3Btn.interactable = false;
+            level1Btn.transform.GetChild(0).gameObject.SetActive(false);
+            level2Btn.transform.GetChild(0).gameObject.SetActive(false);
+            level3Btn.transform.GetChild(0).gameObject.SetActive(false);
+        }
+        else if (GameManager.levelProgress == 2)
+        {
+            level2Btn.interactable = false;
+            level3Btn.interactable = false;
+            level2Btn.transform.GetChild(0).gameObject.SetActive(false);
+            level3Btn.transform.GetChild(0).gameObject.SetActive(false);
+        }
+        else if (GameManager.levelProgress == 3)
+        {
+            level3Btn.interactable = false;
+            level3Btn.transform.GetChild(0).gameObject.SetActive(false);
+        }
 
         level0Btn.onClick.AddListener(() =>
         {

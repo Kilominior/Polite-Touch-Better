@@ -41,19 +41,19 @@ public static class GameManager
 
     static GameManager()
     {
-        if (!File.Exists(Application.dataPath + "/PTP.sav"))
+        if (!File.Exists(Application.persistentDataPath + "/PTBSave.sav"))
         {
-            levelProgress = 0;
-            audioVolume = 80.0f;
-            sfxVolume = 60.0f;
-            language = Language.EN;
+            levelProgress = 1;
+            audioVolume = 0.8f;
+            sfxVolume = 0.6f;
+            language = Language.CH;
             Debug.Log("<存档读取>:已创建新存档.");
             return;
         }
 
         //使用文件流反序列化文件信息，将其存入SaveData，最后存回GameManager
         BinaryFormatter BF = new BinaryFormatter();
-        FileStream FS = File.Open(Application.dataPath + "/PTP.sav", FileMode.Open);
+        FileStream FS = File.Open(Application.persistentDataPath + "/PTBSave.sav", FileMode.Open);
         saveData = BF.Deserialize(FS) as SaveData;
         FS.Close();
         LevelProgress = saveData.levelProgress;
@@ -70,7 +70,7 @@ public static class GameManager
 
     public static void SaveDataReset()
     {
-        levelProgress = 0;
+        levelProgress = 1;
     }
 
     private static void GameSave()
@@ -83,7 +83,7 @@ public static class GameManager
 
         //使用文件流创建文件，并将封装后的数据序列化存入文件中
         BinaryFormatter BF = new BinaryFormatter();
-        FileStream FS = File.Create(Application.dataPath + "/PTP.sav");
+        FileStream FS = File.Create(Application.persistentDataPath + "/PTBSave.sav");
         BF.Serialize(FS, saveData);
         FS.Close();
         Debug.Log("<游戏保存>:小数据自动保存.");

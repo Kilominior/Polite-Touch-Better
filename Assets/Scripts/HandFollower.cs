@@ -17,8 +17,11 @@ public class HandFollower : MonoBehaviour
     public Sprite mode2;
     public Text modeNowText;
 
+    GameManager.Language gameLanguage;
+
     private void Start()
     {
+        gameLanguage = GameManager.language;
         DirSprites = new Sprite[2];
         DirSprites[0] = Resources.Load<Sprite>("LevelObjects/Dir");
         DirSprites[1] = Resources.Load<Sprite>("LevelObjects/DirSoft");
@@ -33,7 +36,7 @@ public class HandFollower : MonoBehaviour
 
     private void Update()
     {
-        if (Time.timeScale == 0) waitOutside();
+        //if (Time.timeScale == 0) waitOutside();
         if (Input.GetMouseButtonDown(1))
         {
             if (autoFollowing) waitOutside();
@@ -50,7 +53,9 @@ public class HandFollower : MonoBehaviour
     {
         autoFollowing = true;
         modeChangeBtn.image.sprite = mode1;
-        modeNowText.text = "¥Ãº§: ¥•µ„”¶º§µØ∑…";
+        if(gameLanguage == GameManager.Language.CH)
+            modeNowText.text = "Œﬁ¿Ì¬“≈ˆ: ª√÷´µØ∑…";
+        else modeNowText.text = "Rude Touch: Bounce";
         foreach (var d in dirFollower.dirs)
             d.GetComponent<SpriteRenderer>().sprite = DirSprites[0];
     }
@@ -60,7 +65,9 @@ public class HandFollower : MonoBehaviour
         autoFollowing = false;
         transform.position = waitingPos.position;
         modeChangeBtn.image.sprite = mode2;
-        modeNowText.text = "∞≤∏ß: ¥•µ„∑≈∆˙◊•Œ’";
+        if (gameLanguage == GameManager.Language.CH)
+            modeNowText.text = "≥œ“‚«·∏ß: ª√÷´À… ÷";
+        else modeNowText.text = "Polite Touch: Let Go";
         foreach (var d in dirFollower.dirs)
             d.GetComponent<SpriteRenderer>().sprite = DirSprites[1];
     }
@@ -85,8 +92,15 @@ public class HandFollower : MonoBehaviour
     {
         distance = collision.transform.position - transform.position;
         collision.GetComponent<Rigidbody2D>().isKinematic = false;
-        if(collision.GetComponent<MainBodyController>())
+        if (collision.GetComponent<MainBodyController>())
+        {
+            collision.GetComponent<MainBodyController>().TouchedCry(1);
             collision.GetComponent<Rigidbody2D>().velocity = touchVelocity * distance / 6.0f;
-        else collision.GetComponent<Rigidbody2D>().velocity = touchVelocity * distance;
+        }
+        else if(collision.GetComponent<JointController>())
+        {
+            collision.GetComponent<SpringJoint2D>().connectedBody.GetComponent<MainBodyController>().TouchedCry(1);
+            collision.GetComponent<Rigidbody2D>().velocity = touchVelocity * distance;
+        }
     }
 }

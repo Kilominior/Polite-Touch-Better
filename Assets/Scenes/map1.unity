@@ -4558,7 +4558,7 @@ RectTransform:
   - {fileID: 1483041946}
   - {fileID: 1054538414}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -4579,7 +4579,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -4763,7 +4763,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &171683769
 GameObject:
@@ -4831,7 +4831,7 @@ Transform:
   - {fileID: 1252527640}
   - {fileID: 1293617490}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &266937861
 GameObject:
@@ -6225,7 +6225,7 @@ Transform:
   - {fileID: 1670801623}
   - {fileID: 784242562}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &724819946
 GameObject:
@@ -7212,7 +7212,7 @@ GameObject:
   - component: {fileID: 1030982040}
   - component: {fileID: 1030982041}
   m_Layer: 5
-  m_Name: AudioSlider
+  m_Name: SfxSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7292,6 +7292,52 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &1032457617
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1032457619}
+  - component: {fileID: 1032457618}
+  m_Layer: 0
+  m_Name: SpeechTriggers
+  m_TagString: Speech
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1032457618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032457617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f97c83839f4204d4abc32cfe917b3529, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speechBoard: {fileID: 1767211890}
+  speechText: {fileID: 1392471087}
+--- !u!4 &1032457619
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032457617}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1033317134
 GameObject:
   m_ObjectHideFlags: 0
@@ -7434,8 +7480,10 @@ MonoBehaviour:
   BackMainMenuBtn0: {fileID: 1950386742}
   RetryBtn0: {fileID: 1966743615}
   ReturnBtn: {fileID: 373335579}
-  MusicSlider: {fileID: 1583530230}
-  AudioSlider: {fileID: 1030982041}
+  AudioSlider: {fileID: 1583530230}
+  SfxSlider: {fileID: 1030982041}
+  audioSource: {fileID: 28961845}
+  sfxSource: {fileID: 0}
   finishMenu: {fileID: 33327028}
   TitleText1: {fileID: 1758292138}
   MenuText1: {fileID: 649053237}
@@ -14907,7 +14955,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -3.48, y: 145.84}
-  m_SizeDelta: {x: 220, y: 110}
+  m_SizeDelta: {x: 270, y: 140}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1392471087
 MonoBehaviour:
@@ -14931,11 +14979,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 93f430a11ed1c894e8e2bf8237bd248b, type: 3}
-    m_FontSize: 20
+    m_FontSize: 26
     m_FontStyle: 1
     m_BestFit: 1
-    m_MinSize: 20
-    m_MaxSize: 26
+    m_MinSize: 26
+    m_MaxSize: 30
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -15098,7 +15146,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1457059667
 PrefabInstance:
@@ -15812,7 +15860,7 @@ GameObject:
   - component: {fileID: 1583530229}
   - component: {fileID: 1583530230}
   m_Layer: 5
-  m_Name: MusicSlider
+  m_Name: AudioSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16238,7 +16286,7 @@ Transform:
   - {fileID: 171683770}
   - {fileID: 57209611}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1621120752
 GameObject:
@@ -16733,8 +16781,8 @@ GameObject:
   - component: {fileID: 1767211892}
   - component: {fileID: 1767211891}
   m_Layer: 0
-  m_Name: Saying
-  m_TagString: Untagged
+  m_Name: SpeechBoard
+  m_TagString: Speech
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16781,7 +16829,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 0ad7aaa6395b91845a7a4ae9227f800a, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.6862745}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -16800,8 +16848,8 @@ Transform:
   m_GameObject: {fileID: 1767211890}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 2.5, z: 0}
-  m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 1.0000001}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 479374317}
   m_RootOrder: 0
@@ -17450,7 +17498,7 @@ Transform:
   - {fileID: 1385742303}
   - {fileID: 7595308}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2083425212
 GameObject:

@@ -10422,7 +10422,7 @@ GameObject:
   - component: {fileID: 1030982040}
   - component: {fileID: 1030982041}
   m_Layer: 5
-  m_Name: AudioSlider
+  m_Name: SfxSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10644,8 +10644,10 @@ MonoBehaviour:
   BackMainMenuBtn0: {fileID: 1950386742}
   RetryBtn0: {fileID: 1966743615}
   ReturnBtn: {fileID: 373335579}
-  MusicSlider: {fileID: 1583530230}
-  AudioSlider: {fileID: 1030982041}
+  AudioSlider: {fileID: 1583530230}
+  SfxSlider: {fileID: 1030982041}
+  audioSource: {fileID: 28961845}
+  sfxSource: {fileID: 0}
   finishMenu: {fileID: 33327028}
   TitleText1: {fileID: 1758292138}
   MenuText1: {fileID: 649053237}
@@ -18459,7 +18461,7 @@ GameObject:
   - component: {fileID: 1583530229}
   - component: {fileID: 1583530230}
   m_Layer: 5
-  m_Name: MusicSlider
+  m_Name: AudioSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

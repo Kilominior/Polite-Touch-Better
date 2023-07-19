@@ -64,7 +64,8 @@ public class JointController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(!isReleasing && collision.name != "Needle" && collision.gameObject.tag != "Joint"
-             && collision.gameObject.tag != "Player")
+             && collision.gameObject.tag != "Player" && collision.gameObject.tag != "Reward"
+             && collision.gameObject.tag != "Speech" && collision.gameObject.tag != "Respawn")
         {
             GetComponent<Rigidbody2D>().isKinematic = true;
             GetComponent<Rigidbody2D>().velocity = Vector2.zero;
@@ -80,7 +81,8 @@ public class JointController : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.name != "Needle" && collision.gameObject.tag != "Joint"
-             && collision.gameObject.tag != "Player")
+             && collision.gameObject.tag != "Player" && collision.gameObject.tag != "Reward"
+             && collision.gameObject.tag != "Speech" && collision.gameObject.tag != "Respawn")
         {
             if(connectedToMovingObj && collision.transform == transform.parent)
             {
@@ -101,6 +103,7 @@ public class JointController : MonoBehaviour
 
     private void OnMouseDown()
     {
+        connectedPart.GetComponent<MainBodyController>().TouchedCry(2);
         releaseHand();
     }
 

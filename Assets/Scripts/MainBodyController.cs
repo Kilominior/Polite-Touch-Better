@@ -14,6 +14,11 @@ public class MainBodyController : MonoBehaviour
 
     public float damagedVelocity;
 
+    private float cryingTime = 0.4f;
+    private Sprite defaultSprite;
+    private Sprite cryingSprite;
+    private Sprite smilingSprite;
+
     private float[] bodyLength;
 
     private float invincibleTime = 3.0f;
@@ -43,11 +48,16 @@ public class MainBodyController : MonoBehaviour
 
         for(int i = 0; i < bodyParts.Length; i++)
             bodyLength[i] = bodyParts[i].GetComponent<JointController>().maxDistance;
+
+        defaultSprite = GetComponent<SpriteRenderer>().sprite;
+        cryingSprite = Resources.Load<Sprite>("Characters/0/h-1");
+        smilingSprite = Resources.Load<Sprite>("Characters/0/h-2");
     }
 
     private void OnMouseDown()
     {
         if (EventSystem.current.IsPointerOverGameObject()) return;
+        TouchedCry(2);
         GetComponent<Rigidbody2D>().isKinematic = false;
         foreach (var p in bodyParts)
         {
@@ -143,5 +153,19 @@ public class MainBodyController : MonoBehaviour
             yield return new WaitForSecondsRealtime(0.4f);
         }
         invincibleCircle.SetActive(false);
+    }
+
+    public void TouchedCry(int status)
+    {
+        StopCoroutine(nameof(touchedCrying));
+        if(status == 1) GetComponent<SpriteRenderer>().sprite = cryingSprite;
+        if(status == 2) GetComponent<SpriteRenderer>().sprite = smilingSprite;
+        StartCoroutine(nameof(touchedCrying));
+    }
+
+    private IEnumerator touchedCrying()
+    {
+        yield return new WaitForSecondsRealtime(cryingTime);
+        GetComponent<SpriteRenderer>().sprite = defaultSprite;
     }
 }
