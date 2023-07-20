@@ -71,16 +71,30 @@ public class SystemMenuController: MonoBehaviour
 
         if (GameManager.language == GameManager.Language.EN)
         {
-            TitleText0.text = "MENU";
+            TitleText0.text = "Pause!\nI will always be here, waiting for your coming back!";
             musicText.text = "music";
             audioText.text = "sfx";
 
-            TitleText1.text = "Congratulations!";
-            MenuText1.text = "You Finished Level" + SceneManager.GetActiveScene().buildIndex
-                + "! \nHe Should Be Grateful!";
+            switch (SceneManager.GetActiveScene().buildIndex)
+            {
+                case 1:
+                    TitleText1.text = "Level 1 clear!\nReady to face more challanges?";
+                    break;
+                case 2:
+                    TitleText1.text = "Level 2 clear!\nJust move on!";
+                    break;
+                case 3:
+                    TitleText1.text = "Level 3 clear!\nNext is the last level, Come on!";
+                    break;
+                case 4:
+                    TitleText1.text = "Levels all clear!\nThank you for playing the game! Soon there will be more levels!";
+                    break;
+            }
+            //MenuText1.text = "You Finished Level" + SceneManager.GetActiveScene().buildIndex
+            //    + "! \nHe Should Be Grateful!";
 
             TitleText2.text = "Failed...";
-            MenuText2.text = "He Needs Your Help! \nTry Again?";
+            //MenuText2.text = "He Needs Your Help! \nTry Again?";
 
             BackMainMenuBtn0.transform.GetChild(0).GetComponent<Text>().text = "Main Menu";
             BackMainMenuBtn1.transform.GetChild(0).GetComponent<Text>().text = "Main Menu";
@@ -95,16 +109,30 @@ public class SystemMenuController: MonoBehaviour
         }
         else if (GameManager.language == GameManager.Language.CH)
         {
-            TitleText0.text = "菜单";
+            TitleText0.text = "暂停啦！\n我一直在呢，什么时候回来都行！";
             musicText.text = "音乐";
             audioText.text = "音效";
 
-            TitleText1.text = "过关！";
-            MenuText1.text = "恭喜通过第" + SceneManager.GetActiveScene().buildIndex
-                + "关！\n就知道你是真心想帮忙！";
+            switch (SceneManager.GetActiveScene().buildIndex)
+            {
+                case 1:
+                    TitleText1.text = "过关啦！\n以后的关卡也多多关照啦！";
+                    break;
+                case 2:
+                    TitleText1.text = "过关啦！\n我们继续前进吧！";
+                    break;
+                case 3:
+                    TitleText1.text = "过关啦！\n接下来就是最后的一关了，加油哇！";
+                    break;
+                case 4:
+                    TitleText1.text = "到这里就通关啦！\n感谢游玩！后续还会有更多关卡加入，敬请期待！";
+                    break;
+            }
+            //MenuText1.text = "恭喜通过第" + SceneManager.GetActiveScene().buildIndex
+            //    + "关！\n就知道你是真心想帮忙！";
 
             TitleText2.text = "失败...";
-            MenuText2.text = "他需要你的帮助，\n再试一次吧？";
+            //MenuText2.text = "他需要你的帮助，\n再试一次吧？";
 
             BackMainMenuBtn0.transform.GetChild(0).GetComponent<Text>().text = "主菜单";
             BackMainMenuBtn1.transform.GetChild(0).GetComponent<Text>().text = "主菜单";
@@ -212,8 +240,22 @@ public class SystemMenuController: MonoBehaviour
         StartCoroutine(nameof(popWait), false);
     }
 
-    public void OnDead()
+    public void OnDead(bool isFallen)
     {
+        if (isFallen)
+        {
+            if(GameManager.language == GameManager.Language.CH)
+                TitleText2.text = "不好！越界了...吗......";
+            else
+                TitleText2.text = "OHHH NOOOOOO!";
+        }
+        else
+        {
+            if (GameManager.language == GameManager.Language.CH)
+                TitleText2.text = "头疼......还想...重来...";
+            else
+                TitleText2.text = "Oh my head! I want to... try again...";
+        }
         StartCoroutine(nameof(popWait), true);
     }
 

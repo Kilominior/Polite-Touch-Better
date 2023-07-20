@@ -8,7 +8,7 @@ public class MainBodyController : MonoBehaviour
 {
     public GameObject bodyParent;
     public GameObject[] bodyParts;
-    private int bodyExistCount;
+    public int bodyExistCount { get; private set; }
     private bool[] bodyExist;
     public GameObject spritePrefab;
 
@@ -18,6 +18,7 @@ public class MainBodyController : MonoBehaviour
     private Sprite defaultSprite;
     private Sprite cryingSprite;
     private Sprite smilingSprite;
+    private int faceNow;
 
     private float[] bodyLength;
 
@@ -52,6 +53,7 @@ public class MainBodyController : MonoBehaviour
         defaultSprite = GetComponent<SpriteRenderer>().sprite;
         cryingSprite = Resources.Load<Sprite>("Characters/0/h-1");
         smilingSprite = Resources.Load<Sprite>("Characters/0/h-2");
+        faceNow = 0;
     }
 
     private void OnMouseDown()
@@ -69,7 +71,8 @@ public class MainBodyController : MonoBehaviour
     {
         if(collision.gameObject.tag == "Respawn")
         {
-            systemMenu.OnDead();
+            FaceChange(1);
+            systemMenu.OnDead(true);
         }
         if(collision.gameObject.tag == "Reward")
         {
@@ -88,6 +91,7 @@ public class MainBodyController : MonoBehaviour
         else
         {
             reward.SetActive(false);
+            TouchedCry(2);
             bodyExistCount++;
             List<int> getIndex = new List<int>(6 - bodyExistCount);
             for (int i = 0; i < bodyParts.Length; i++)
@@ -114,14 +118,19 @@ public class MainBodyController : MonoBehaviour
         }
         GetComponent<Rigidbody2D>().velocity = damagedVelocity * (transform.position - collidePos);
         bodyExistCount--;
-        if(bodyExistCount == -1) systemMenu.OnDead();
+        if (bodyExistCount == -1)
+        {
+            FaceChange(1);
+            systemMenu.OnDead(false);
+        }
         else
         {
             invincible = true;
+            TouchedCry(1);
             StartCoroutine(nameof(damageWait));
             StartCoroutine(nameof(invincibleShine));
             List<int> disappearIndex = new List<int>(bodyExistCount + 1);
-            for(int i = 0; i < bodyParts.Length; i++)
+            for (int i = 0; i < bodyParts.Length; i++)
             {
                 if (bodyExist[i])
                 {
@@ -158,9 +167,18 @@ public class MainBodyController : MonoBehaviour
     public void TouchedCry(int status)
     {
         StopCoroutine(nameof(touchedCrying));
+        if (faceNow != 0) return;
         if(status == 1) GetComponent<SpriteRenderer>().sprite = cryingSprite;
         if(status == 2) GetComponent<SpriteRenderer>().sprite = smilingSprite;
         StartCoroutine(nameof(touchedCrying));
+    }
+
+    public void FaceChange(int status)
+    {
+        faceNow = status;
+        if (status == 0) GetComponent<SpriteRenderer>().sprite = defaultSprite;
+        if (status == 1) GetComponent<SpriteRenderer>().sprite = cryingSprite;
+        if (status == 2) GetComponent<SpriteRenderer>().sprite = smilingSprite;
     }
 
     private IEnumerator touchedCrying()

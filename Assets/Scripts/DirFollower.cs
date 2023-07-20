@@ -29,6 +29,7 @@ public class DirFollower : MonoBehaviour
 
     void Update()
     {
+        if (Time.timeScale == 0) return;
         for(int i = 0; i < dirs.Length; i++)
         {
             if (!followingObjs[i].activeInHierarchy && dirs[i].activeInHierarchy)
