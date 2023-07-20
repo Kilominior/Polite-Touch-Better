@@ -8,6 +8,9 @@ public class FinishPoint : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
+        {
             systemMenu.OnFinish();
+            GetComponent<Collider2D>().enabled = false;
+        }
     }
 }

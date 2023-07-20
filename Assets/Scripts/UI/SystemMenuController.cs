@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class SystemMenuController: MonoBehaviour
 {
+    public GameObject LoadMask;
+
     public Button PauseBtn;
 
     public GameObject ScreenMask;
@@ -22,6 +25,8 @@ public class SystemMenuController: MonoBehaviour
     public Slider SfxSlider;
     public AudioSource audioSource;
     public AudioSource sfxSource;
+    public GameObject musicBoard;
+    public GameObject speechBoard0;
 
     public GameObject finishMenu;
 
@@ -30,6 +35,7 @@ public class SystemMenuController: MonoBehaviour
     public Button BackMainMenuBtn1;
     public Button RetryBtn1;
     public Button NextLevelBtn;
+    public GameObject speechBoard1;
 
     public GameObject deadMenu;
 
@@ -37,35 +43,83 @@ public class SystemMenuController: MonoBehaviour
     public Text MenuText2;
     public Button BackMainMenuBtn2;
     public Button RetryBtn2;
+    public GameObject speechBoard2;
+
+    private List<Button> btns;
+    private List<Vector3> btnPos;
+
+    private bool gameOver;
+
+    private void Awake()
+    {
+        Time.timeScale = 1.0f;
+        LoadMask.SetActive(true);
+        StartCoroutine(nameof(maskFade));
+    }
+
+    private IEnumerator maskFade()
+    {
+        yield return new WaitForSecondsRealtime(.5f);
+        LoadMask.transform.DOScale(60.0f, 1.0f).OnComplete(() => LoadMask.SetActive(false));
+    }
 
     void Start()
     {
         Debug.Log("<场景加载>:当前场景为" + SceneManager.GetActiveScene().buildIndex);
         Time.timeScale = 1;
+        gameOver = false;
         pauseMenu.SetActive(false);
         finishMenu.SetActive(false);
         deadMenu.SetActive(false);
 
+        btns = new List<Button>(8);
+        btns.Add(BackMainMenuBtn0);
+        btns.Add(BackMainMenuBtn1);
+        btns.Add(BackMainMenuBtn2);
+        btns.Add(RetryBtn0);
+        btns.Add(RetryBtn1);
+        btns.Add(RetryBtn2);
+        btns.Add(ReturnBtn);
+        btns.Add(NextLevelBtn);
+
+        btnPos = new List<Vector3>(8);
+        foreach (var b in btns)
+        {
+            b.GetComponent<FloatingTitle>().trans1 = b.transform.localPosition;
+            btnPos.Add(b.transform.localPosition);
+        }
 
         PauseBtn.onClick.AddListener(() =>
         {
+            if (gameOver) return;
             if (pauseMenu.activeSelf)
             {
                 OnResume();
-                pauseMenu.SetActive(false);
-                ScreenMask.SetActive(false);
+                musicBoard.transform.DOLocalMoveY(-1000.0f, .1f).OnComplete(() => pauseMenu.SetActive(false));
                 return;
             }
-            OnPause();
+
+            musicBoard.transform.localPosition = new(0.0f, -1000.0f);
+            for (int i = 0; i < 8; i++)
+            {
+                btns[i].transform.localPosition = Vector3.zero;
+                btns[i].GetComponent<FloatingTitle>().enabled = false;
+            }
             pauseMenu.SetActive(true);
-            ScreenMask.SetActive(true);
+            for (int i = 0; i < 8; i++)
+            {
+                int q = i;
+                btns[q].transform.DOLocalMove(btnPos[q], .1f).OnComplete(() =>
+                btns[q].GetComponent<FloatingTitle>().enabled = true);
+            }
+            speechBoard0.transform.DOShakeScale(.1f, 0.5f, 8, 45.0f);
+            musicBoard.transform.DOLocalMoveY(-500.0f, .1f).OnComplete(() => OnPause());
         });
 
         ReturnBtn.onClick.AddListener(() =>
         {
             OnResume();
-            pauseMenu.SetActive(false);
-            ScreenMask.SetActive(false);
+            musicBoard.transform.DOLocalMoveY(-1000.0f, .1f).OnComplete(() => pauseMenu.SetActive(false));
         });
 
 
@@ -99,13 +153,21 @@ public class SystemMenuController: MonoBehaviour
             BackMainMenuBtn0.transform.GetChild(0).GetComponent<Text>().text = "Main Menu";
             BackMainMenuBtn1.transform.GetChild(0).GetComponent<Text>().text = "Main Menu";
             BackMainMenuBtn2.transform.GetChild(0).GetComponent<Text>().text = "Main Menu";
+            BackMainMenuBtn0.transform.GetChild(1).GetComponent<Text>().text = "Main Menu";
+            BackMainMenuBtn1.transform.GetChild(1).GetComponent<Text>().text = "Main Menu";
+            BackMainMenuBtn2.transform.GetChild(1).GetComponent<Text>().text = "Main Menu";
 
             RetryBtn0.transform.GetChild(0).GetComponent<Text>().text = "Try Again";
             RetryBtn1.transform.GetChild(0).GetComponent<Text>().text = "Try Again";
             RetryBtn2.transform.GetChild(0).GetComponent<Text>().text = "Try Again";
+            RetryBtn0.transform.GetChild(1).GetComponent<Text>().text = "Try Again";
+            RetryBtn1.transform.GetChild(1).GetComponent<Text>().text = "Try Again";
+            RetryBtn2.transform.GetChild(1).GetComponent<Text>().text = "Try Again";
 
             ReturnBtn.transform.GetChild(0).GetComponent<Text>().text = "Continue";
             NextLevelBtn.transform.GetChild(0).GetComponent<Text>().text = "Next Level";
+            ReturnBtn.transform.GetChild(1).GetComponent<Text>().text = "Continue";
+            NextLevelBtn.transform.GetChild(1).GetComponent<Text>().text = "Next Level";
         }
         else if (GameManager.language == GameManager.Language.CH)
         {
@@ -137,13 +199,21 @@ public class SystemMenuController: MonoBehaviour
             BackMainMenuBtn0.transform.GetChild(0).GetComponent<Text>().text = "主菜单";
             BackMainMenuBtn1.transform.GetChild(0).GetComponent<Text>().text = "主菜单";
             BackMainMenuBtn2.transform.GetChild(0).GetComponent<Text>().text = "主菜单";
+            BackMainMenuBtn0.transform.GetChild(1).GetComponent<Text>().text = "主菜单";
+            BackMainMenuBtn1.transform.GetChild(1).GetComponent<Text>().text = "主菜单";
+            BackMainMenuBtn2.transform.GetChild(1).GetComponent<Text>().text = "主菜单";
 
             RetryBtn0.transform.GetChild(0).GetComponent<Text>().text = "重试";
             RetryBtn1.transform.GetChild(0).GetComponent<Text>().text = "重试";
             RetryBtn2.transform.GetChild(0).GetComponent<Text>().text = "重试";
+            RetryBtn0.transform.GetChild(1).GetComponent<Text>().text = "重试";
+            RetryBtn1.transform.GetChild(1).GetComponent<Text>().text = "重试";
+            RetryBtn2.transform.GetChild(1).GetComponent<Text>().text = "重试";
 
             ReturnBtn.transform.GetChild(0).GetComponent<Text>().text = "继续游戏";
             NextLevelBtn.transform.GetChild(0).GetComponent<Text>().text = "下一关";
+            ReturnBtn.transform.GetChild(1).GetComponent<Text>().text = "继续游戏";
+            NextLevelBtn.transform.GetChild(1).GetComponent<Text>().text = "下一关";
         }
 
 
@@ -226,22 +296,36 @@ public class SystemMenuController: MonoBehaviour
 
     public void ToMainMenu()
     {
-        SceneManager.LoadScene(0);
+        Time.timeScale = 1f;
+        LoadMask.SetActive(true);
+        LoadMask.transform.DOScale(1.0f, 1.0f).OnComplete(() => {
+            SceneManager.LoadScene(0);
+        });
     }
 
     public void OnRestart()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         Time.timeScale = 1f;
+        if (LoadMask.activeInHierarchy)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            return;
+        }
+        LoadMask.SetActive(true);
+        LoadMask.transform.DOScale(1.0f, 1.0f).OnComplete(() => {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        });
     }
 
     public void OnFinish()
     {
+        gameOver = true;
         StartCoroutine(nameof(popWait), false);
     }
 
     public void OnDead(bool isFallen)
     {
+        gameOver = true;
         if (isFallen)
         {
             if(GameManager.language == GameManager.Language.CH)
@@ -252,7 +336,7 @@ public class SystemMenuController: MonoBehaviour
         else
         {
             if (GameManager.language == GameManager.Language.CH)
-                TitleText2.text = "头疼......还想...重来...";
+                TitleText2.text = "头疼......但还想...重来...";
             else
                 TitleText2.text = "Oh my head! I want to... try again...";
         }
@@ -261,14 +345,39 @@ public class SystemMenuController: MonoBehaviour
 
     private IEnumerator popWait(bool isDead)
     {
-        yield return new WaitForSecondsRealtime(0.6f);
-        OnPause();
-        if (isDead) deadMenu.SetActive(true);
+        for (int i = 0; i < 8; i++)
+        {
+            btns[i].transform.localPosition = Vector3.zero;
+            btns[i].GetComponent<FloatingTitle>().enabled = false;
+        }
+        if (isDead)
+        {
+            deadMenu.SetActive(true);
+            speechBoard2.transform.DOShakeScale(.2f, 0.5f, 8, 45.0f);
+        }
         else
         {
             if (GameManager.levelProgress <= SceneManager.GetActiveScene().buildIndex)
                 GameManager.levelProgress++;
             finishMenu.SetActive(true);
+            speechBoard1.transform.DOShakeScale(.2f, 0.5f, 8, 45.0f);
+        }
+        for (int i = 0; i < 8; i++)
+        {
+            int q = i;
+            btns[q].transform.DOLocalMove(btnPos[q], .4f).OnComplete(() =>
+            btns[q].GetComponent<FloatingTitle>().enabled = true);
+        }
+        yield return new WaitForSecondsRealtime(0.6f);
+        OnPause();
+    }
+
+    private IEnumerator gameOverMenuClear()
+    {
+        while (gameOver)
+        {
+            pauseMenu.SetActive(false);
+            yield return new WaitForFixedUpdate();
         }
     }
 }

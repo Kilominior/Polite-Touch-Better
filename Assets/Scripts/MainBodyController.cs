@@ -26,7 +26,10 @@ public class MainBodyController : MonoBehaviour
     private bool invincible;
     public GameObject invincibleCircle;
 
+    private bool dead;
+
     public SystemMenuController systemMenu;
+    public SpeechController speech;
 
     private void Awake()
     {
@@ -54,6 +57,8 @@ public class MainBodyController : MonoBehaviour
         cryingSprite = Resources.Load<Sprite>("Characters/0/h-1");
         smilingSprite = Resources.Load<Sprite>("Characters/0/h-2");
         faceNow = 0;
+
+        dead = false;
     }
 
     private void OnMouseDown()
@@ -69,9 +74,11 @@ public class MainBodyController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Respawn")
+        if (dead) return;
+        if (collision.gameObject.tag == "Respawn")
         {
             FaceChange(1);
+            dead = true;
             systemMenu.OnDead(true);
         }
         if(collision.gameObject.tag == "Reward")
@@ -91,7 +98,20 @@ public class MainBodyController : MonoBehaviour
         else
         {
             reward.SetActive(false);
-            TouchedCry(2);
+            if(GameManager.language == GameManager.Language.EN)
+            {
+                if (bodyExistCount <= 1) speech.speech("I can't believe this! But it's real! There is still hope!", 2);
+                if (bodyExistCount == 2) speech.speech("Here comes my rebirth! Having more body parts is so nice!", 2);
+                if (bodyExistCount == 3) speech.speech("We are returning to the best! Having more body parts is sooo nice!", 2);
+                else if (bodyExistCount == 4) speech.speech("I'm getting back to my peak state! Thank you very much!", 2);
+            }
+            if (GameManager.language == GameManager.Language.CH)
+            {
+                if (bodyExistCount <= 1) speech.speech("这...这......绝境逢生啊！还有希望！", 2);
+                if (bodyExistCount == 2) speech.speech("重获新生！幻肢多的感觉就是好啊！", 2);
+                if (bodyExistCount == 3) speech.speech("渐回佳境！幻肢多的感觉就是好啊！", 2);
+                else if(bodyExistCount == 4) speech.speech("回到我的巅峰状态啦！真是多亏了你啊！", 2);
+            }
             bodyExistCount++;
             List<int> getIndex = new List<int>(6 - bodyExistCount);
             for (int i = 0; i < bodyParts.Length; i++)
@@ -121,12 +141,28 @@ public class MainBodyController : MonoBehaviour
         if (bodyExistCount == -1)
         {
             FaceChange(1);
+            dead = true;
             systemMenu.OnDead(false);
         }
         else
         {
             invincible = true;
-            TouchedCry(1);
+            if (GameManager.language == GameManager.Language.EN)
+            {
+                if (bodyExistCount == 4) speech.speech("It seems that I can't fully recover now but... I know you can do it!", 1);
+                else if (bodyExistCount == 3) speech.speech("To be honest, less body parts means better control, right?", 1);
+                else if (bodyExistCount == 2) speech.speech("Ohhh! Take it easy friend! I... I want my mom!", 1);
+                else if (bodyExistCount == 1) speech.speech("It's difficult to stand with one last body part, maybe the only choice now is to swing...", 1);
+                else speech.speech("A drop in the ocean, drifting in the vast universe... Perhaps we can only start over again...", 1);
+            }
+            if (GameManager.language == GameManager.Language.CH)
+            {
+                if (bodyExistCount == 4) speech.speech("看来这下没法全身而退了...但，我知道你可以的！", 1);
+                else if (bodyExistCount == 3) speech.speech("说实话，幻肢少点更好操作，是吧......", 1);
+                else if (bodyExistCount == 2) speech.speech("嘿！悠着点啊！我...我开始害怕了......", 1);
+                else if (bodyExistCount == 1) speech.speech("独木难支，接下来...可能只能用摆荡行动了......", 1);
+                else speech.speech("沧海一粟，漂游在这茫茫宇宙......也许咱们只能重来了...", 1);
+            }
             StartCoroutine(nameof(damageWait));
             StartCoroutine(nameof(invincibleShine));
             List<int> disappearIndex = new List<int>(bodyExistCount + 1);

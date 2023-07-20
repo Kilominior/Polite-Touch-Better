@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class MainMenu : MonoBehaviour
 {
+    public GameObject loadMask;
     public Button startBtn;
     public Text startText0;
     public Text startText1;
@@ -23,23 +25,80 @@ public class MainMenu : MonoBehaviour
     public Image titleImage;
     public Sprite titleCH;
     public Sprite titleEN;
+    public GameObject face;
+    private List<Button> btns;
+    private List<Vector3> btnPos;
+
+    private void Awake()
+    {
+        Time.timeScale = 1.0f;
+        loadMask.SetActive(true);
+        DOTween.Init();
+        StartCoroutine(nameof(maskFade));
+    }
+
+    private IEnumerator maskFade()
+    {
+        loadMask.transform.localScale = Vector3.one;
+        yield return new WaitForSecondsRealtime(1.0f);
+        loadMask.transform.DOScale(60.0f, 1.0f).OnComplete(() => loadMask.SetActive(false));
+    }
 
     private void Start()
     {
+        btns = new List<Button>(4);
+        btns.Add(level0Btn);
+        btns.Add(level1Btn);
+        btns.Add(level2Btn);
+        btns.Add(level3Btn);
+        btnPos = new List<Vector3>(4);
+        foreach (var b in btns)
+        {
+            b.GetComponent<FloatingTitle>().trans1 = b.transform.localPosition;
+            btnPos.Add(b.transform.localPosition);
+        }
+
         levelChoosePage.SetActive(false);
         startBtn.onClick.AddListener(() =>
         {
-            if (levelChoosePage.activeInHierarchy) levelChoosePage.SetActive(false);
-            else levelChoosePage.SetActive(true);
+            if (levelChoosePage.activeInHierarchy)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    btns[i].GetComponent<FloatingTitle>().enabled = false;
+                    int q = i;
+                    btns[q].transform.DOLocalMove(Vector3.zero, .4f).OnComplete(() =>
+                    levelChoosePage.SetActive(false));
+                }
+            }
+            else
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    btns[i].transform.localPosition = Vector3.zero;
+                    btns[i].GetComponent<FloatingTitle>().enabled = false;
+                }
+                levelChoosePage.SetActive(true);
+                for (int i = 0; i < 4; i++)
+                {
+                    int q = i;
+                    btns[q].transform.DOLocalMove(btnPos[q], .4f).OnComplete(() =>
+                    btns[q].GetComponent<FloatingTitle>().enabled = true);
+                }
+            }
         });
 
         ExitBtn.onClick.AddListener(() =>
         {
+
+            loadMask.SetActive(true);
+            loadMask.transform.DOScale(1.0f, 1.0f).OnComplete(() => {
 #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;//如果是在unity编译器中
+                UnityEditor.EditorApplication.isPlaying = false;//如果是在unity编译器中
 #else
             Application.Quit();//否则在打包文件中
 #endif
+            });
         });
 
         if(GameManager.language == GameManager.Language.CH)
@@ -68,7 +127,10 @@ public class MainMenu : MonoBehaviour
             if(GameManager.language == GameManager.Language.EN)
                 GameManager.language = GameManager.Language.CH;
             else GameManager.language = GameManager.Language.EN;
-            SceneManager.LoadScene(0);
+            loadMask.SetActive(true);
+            loadMask.transform.DOScale(1.0f, 1.0f).OnComplete(() => {
+                SceneManager.LoadScene(0);
+            });
         });
 
         if(GameManager.levelProgress == 1)
@@ -95,21 +157,48 @@ public class MainMenu : MonoBehaviour
 
         level0Btn.onClick.AddListener(() =>
         {
-            SceneManager.LoadScene(1);
+            loadMask.SetActive(true);
+            loadMask.transform.DOScale(1.0f, 1.0f).OnComplete(() => {
+                SceneManager.LoadScene(1);
+            });
         });
         level1Btn.onClick.AddListener(() =>
         {
-            SceneManager.LoadScene(2);
+            loadMask.SetActive(true);
+            loadMask.transform.DOScale(1.0f, 1.0f).OnComplete(() => {
+                SceneManager.LoadScene(2);
+            });
         });
         level2Btn.onClick.AddListener(() =>
         {
-            SceneManager.LoadScene(3);
+            loadMask.SetActive(true);
+            loadMask.transform.DOScale(1.0f, 1.0f).OnComplete(() => {
+                SceneManager.LoadScene(3);
+            });
         });
         level3Btn.onClick.AddListener(() =>
         {
-            SceneManager.LoadScene(4);
+            loadMask.SetActive(true);
+            loadMask.transform.DOScale(1.0f, 1.0f).OnComplete(() => {
+                SceneManager.LoadScene(4);
+            });
         });
 
         GetComponent<AudioSource>().volume = GameManager.audioVolume;
+    }
+
+    private void Update()
+    {
+        face.GetComponent<LineRenderer>().SetPosition(2, Vector3.zero);
+        face.GetComponent<LineRenderer>().SetPosition(1, (Vector3.zero + 
+            titleImage.transform.GetChild(0).transform.position) / 2);
+        face.GetComponent<LineRenderer>().SetPosition(0, titleImage.transform.GetChild(0).transform.position);
+        foreach(var b in btns)
+        {
+            b.GetComponent<LineRenderer>().SetPosition(2, Vector3.zero);
+            b.GetComponent<LineRenderer>().SetPosition(1, (Vector3.zero +
+                b.transform.position) / 2);
+            b.GetComponent<LineRenderer>().SetPosition(0, b.transform.position);
+        }
     }
 }

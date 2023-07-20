@@ -16,6 +16,7 @@ public class HandFollower : MonoBehaviour
     public Sprite mode1;
     public Sprite mode2;
     public Text modeNowText;
+    public Text modeNowText1;
 
     GameManager.Language gameLanguage;
 
@@ -53,9 +54,16 @@ public class HandFollower : MonoBehaviour
     {
         autoFollowing = true;
         modeChangeBtn.image.sprite = mode1;
-        if(gameLanguage == GameManager.Language.CH)
+        if (gameLanguage == GameManager.Language.CH)
+        {
             modeNowText.text = "Œﬁ¿Ì¬“≈ˆ: ª√÷´µØ∑…";
-        else modeNowText.text = "Rude Touch: Bounce";
+            modeNowText1.text = "Œﬁ¿Ì¬“≈ˆ: ª√÷´µØ∑…";
+        }
+        else
+        {
+            modeNowText.text = "Rude Touch: Bounce";
+            modeNowText1.text = "Rude Touch: Bounce";
+        }
         foreach (var d in dirFollower.dirs)
             d.GetComponent<SpriteRenderer>().sprite = DirSprites[0];
     }
@@ -66,8 +74,15 @@ public class HandFollower : MonoBehaviour
         transform.position = waitingPos.position;
         modeChangeBtn.image.sprite = mode2;
         if (gameLanguage == GameManager.Language.CH)
+        {
             modeNowText.text = "≥œ“‚«·∏ß: ª√÷´À… ÷";
-        else modeNowText.text = "Polite Touch: Let Go";
+            modeNowText1.text = "≥œ“‚«·∏ß: ª√÷´À… ÷";
+        }
+        else
+        {
+            modeNowText.text = "Polite Touch: Let Go";
+            modeNowText1.text = "Polite Touch: Let Go";
+        }
         foreach (var d in dirFollower.dirs)
             d.GetComponent<SpriteRenderer>().sprite = DirSprites[1];
     }
