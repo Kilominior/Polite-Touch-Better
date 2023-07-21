@@ -25,6 +25,7 @@ public class SystemMenuController: MonoBehaviour
     public Slider SfxSlider;
     public AudioSource audioSource;
     public AudioSource sfxSource;
+    public AudioSource speechSource;
     public GameObject musicBoard;
     public GameObject speechBoard0;
 
@@ -49,6 +50,8 @@ public class SystemMenuController: MonoBehaviour
     private List<Vector3> btnPos;
 
     private bool gameOver;
+
+    public AudioClip[] audioClips;
 
     private void Awake()
     {
@@ -89,16 +92,20 @@ public class SystemMenuController: MonoBehaviour
             btnPos.Add(b.transform.localPosition);
         }
 
+        audioClips = Resources.LoadAll<AudioClip>("Audio/SFX");
+
         PauseBtn.onClick.AddListener(() =>
         {
             if (gameOver) return;
             if (pauseMenu.activeSelf)
             {
+                AudioPlay(1);
                 OnResume();
                 musicBoard.transform.DOLocalMoveY(-1000.0f, .1f).OnComplete(() => pauseMenu.SetActive(false));
                 return;
             }
 
+            AudioPlay(0);
             musicBoard.transform.localPosition = new(0.0f, -1000.0f);
             for (int i = 0; i < 8; i++)
             {
@@ -118,6 +125,7 @@ public class SystemMenuController: MonoBehaviour
 
         ReturnBtn.onClick.AddListener(() =>
         {
+            AudioPlay(1);
             OnResume();
             musicBoard.transform.DOLocalMoveY(-1000.0f, .1f).OnComplete(() => pauseMenu.SetActive(false));
         });
@@ -222,11 +230,13 @@ public class SystemMenuController: MonoBehaviour
 
         BackMainMenuBtn0.onClick.AddListener(() =>
         {
+            AudioPlay(1);
             ToMainMenu();
         });
 
         RetryBtn0.onClick.AddListener(() =>
         {
+            AudioPlay(0);
             OnRestart();
         });
 
@@ -237,16 +247,19 @@ public class SystemMenuController: MonoBehaviour
 
         BackMainMenuBtn1.onClick.AddListener(() =>
         {
+            AudioPlay(1);
             ToMainMenu();
         });
 
         RetryBtn1.onClick.AddListener(() =>
         {
+            AudioPlay(0);
             OnRestart();
         });
 
         NextLevelBtn.onClick.AddListener(() =>
         {
+            AudioPlay(0);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         });
 
@@ -254,11 +267,13 @@ public class SystemMenuController: MonoBehaviour
         // 死亡弹窗
         BackMainMenuBtn2.onClick.AddListener(() =>
         {
+            AudioPlay(1);
             ToMainMenu();
         });
 
         RetryBtn2.onClick.AddListener(() =>
         {
+            AudioPlay(0);
             OnRestart();
         });
 
@@ -266,7 +281,8 @@ public class SystemMenuController: MonoBehaviour
         AudioSlider.value = GameManager.audioVolume;
         SfxSlider.value = GameManager.sfxVolume;
         audioSource.volume = GameManager.audioVolume;
-        //sfxSource.volume = GameManager.sfxVolume;
+        sfxSource.volume = GameManager.sfxVolume;
+        speechSource.volume = GameManager.sfxVolume;
 
         AudioSlider.onValueChanged.AddListener((float value) =>
         {
@@ -277,7 +293,8 @@ public class SystemMenuController: MonoBehaviour
         SfxSlider.onValueChanged.AddListener((float value) =>
         {
             GameManager.sfxVolume = value;
-            //sfxSource.volume = value;
+            sfxSource.volume = value;
+            speechSource.volume = value;
         });
     }
 
@@ -320,12 +337,14 @@ public class SystemMenuController: MonoBehaviour
     public void OnFinish()
     {
         gameOver = true;
+        AudioPlay(9, true);
         StartCoroutine(nameof(popWait), false);
     }
 
     public void OnDead(bool isFallen)
     {
         gameOver = true;
+        AudioPlay(8, true);
         if (isFallen)
         {
             if(GameManager.language == GameManager.Language.CH)
@@ -379,6 +398,26 @@ public class SystemMenuController: MonoBehaviour
             pauseMenu.SetActive(false);
             yield return new WaitForFixedUpdate();
         }
+    }
+
+
+    /// <summary>
+    /// 根据索引播放音乐，索引参见Resources/Audio/SFX文件夹
+    /// </summary>
+    public void AudioPlay(int musicIndex, bool isSpeech = false)
+    {
+        if (isSpeech)
+        {
+            speechSource.clip = audioClips[musicIndex];
+            speechSource.Play();
+            return;
+        }
+        if(musicIndex == 2)
+        {
+            sfxSource.clip = audioClips[Random.Range(10, 14)];
+        }
+        else sfxSource.clip = audioClips[musicIndex];
+        sfxSource.Play();
     }
 }
 

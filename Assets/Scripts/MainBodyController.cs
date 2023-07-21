@@ -31,6 +31,8 @@ public class MainBodyController : MonoBehaviour
     public SystemMenuController systemMenu;
     public SpeechController speech;
 
+    public bool isRudeTouch;
+
     private void Awake()
     {
         invincibleCircle.SetActive(false);
@@ -64,6 +66,7 @@ public class MainBodyController : MonoBehaviour
     private void OnMouseDown()
     {
         if (EventSystem.current.IsPointerOverGameObject()) return;
+        if (isRudeTouch) return;
         TouchedCry(2);
         GetComponent<Rigidbody2D>().isKinematic = false;
         foreach (var p in bodyParts)

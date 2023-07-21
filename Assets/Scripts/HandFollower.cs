@@ -7,7 +7,7 @@ public class HandFollower : MonoBehaviour
 {
     public float touchVelocity;
     private Vector2 distance;
-    private bool autoFollowing;
+    public bool autoFollowing { private set; get; }
     public Transform waitingPos;
     private DirFollower dirFollower;
     private Sprite[] DirSprites;
@@ -18,6 +18,8 @@ public class HandFollower : MonoBehaviour
     public Text modeNowText;
     public Text modeNowText1;
 
+    public SystemMenuController systemMenu;
+    public MainBodyController mainBody;
     GameManager.Language gameLanguage;
 
     private void Start()
@@ -30,8 +32,16 @@ public class HandFollower : MonoBehaviour
         keepFollowing();
         modeChangeBtn.onClick.AddListener(() =>
         {
-            if (autoFollowing) waitOutside();
-            else keepFollowing();
+            if (autoFollowing)
+            {
+                systemMenu.AudioPlay(0);
+                waitOutside();
+            }
+            else
+            {
+                systemMenu.AudioPlay(1);
+                keepFollowing();
+            }
         });
     }
 
@@ -40,8 +50,16 @@ public class HandFollower : MonoBehaviour
         //if (Time.timeScale == 0) waitOutside();
         if (Input.GetMouseButtonDown(1))
         {
-            if (autoFollowing) waitOutside();
-            else keepFollowing();
+            if (autoFollowing)
+            {
+                systemMenu.AudioPlay(0);
+                waitOutside();
+            }
+            else
+            {
+                systemMenu.AudioPlay(1);
+                keepFollowing();
+            }
         }
         if (autoFollowing)
         {
@@ -53,6 +71,7 @@ public class HandFollower : MonoBehaviour
     public void keepFollowing()
     {
         autoFollowing = true;
+        mainBody.isRudeTouch = true;
         modeChangeBtn.image.sprite = mode1;
         if (gameLanguage == GameManager.Language.CH)
         {
@@ -71,6 +90,7 @@ public class HandFollower : MonoBehaviour
     public void waitOutside()
     {
         autoFollowing = false;
+        mainBody.isRudeTouch = false;
         transform.position = waitingPos.position;
         modeChangeBtn.image.sprite = mode2;
         if (gameLanguage == GameManager.Language.CH)

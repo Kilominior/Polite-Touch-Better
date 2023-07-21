@@ -16,6 +16,8 @@ public class SpeechController : MonoBehaviour
     public void speech(string sText, int faceChangeTo = 0, bool isReading = false)
     {
         StopCoroutine(nameof(speeching));
+        if(!isReading) mainBody.systemMenu.AudioPlay(faceChangeTo + 4, true);
+        else mainBody.systemMenu.AudioPlay(7, true);
         mainBody.FaceChange(faceChangeTo);
         speechText.text = sText;
         speechText.gameObject.SetActive(true);

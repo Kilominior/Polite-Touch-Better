@@ -67,6 +67,7 @@ public class JointController : MonoBehaviour
              && collision.gameObject.tag != "Player" && collision.gameObject.tag != "Reward"
              && collision.gameObject.tag != "Speech" && collision.gameObject.tag != "Respawn")
         {
+            connectedPart.GetComponent<MainBodyController>().systemMenu.AudioPlay(2);
             GetComponent<Rigidbody2D>().isKinematic = true;
             GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             if (collision.GetComponent<FloatingTitle>() || collision.GetComponent<Spinning>())
@@ -103,6 +104,7 @@ public class JointController : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (connectedPart.GetComponent<MainBodyController>().isRudeTouch) return;
         connectedPart.GetComponent<MainBodyController>().TouchedCry(2);
         releaseHand();
     }
