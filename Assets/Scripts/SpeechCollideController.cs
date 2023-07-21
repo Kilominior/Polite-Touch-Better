@@ -10,13 +10,15 @@ public class SpeechCollideController : MonoBehaviour
     public string TextEN1 = "";
     public int faceChangeTo = 0;
     public bool toBeRead = false;
+    public bool isReading;
     public bool touched;
 
     private GameManager.Language language;
 
     private void Start()
     {
-        if(!toBeRead) GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+        isReading = false;
+        if (!toBeRead) GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
         language = GameManager.language;
         touched = false;
     }
@@ -24,6 +26,7 @@ public class SpeechCollideController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (touched) return;
+        if (isReading) return;
         if (collision.tag == "Player")
         {
             if(TextCH1 != "")
@@ -47,7 +50,15 @@ public class SpeechCollideController : MonoBehaviour
                     transform.parent.GetComponent<SpeechController>().speech(TextCH, faceChangeTo, toBeRead);
                 else transform.parent.GetComponent<SpeechController>().speech(TextEN, faceChangeTo, toBeRead);
             }
-            if(!toBeRead) touched = true;
+            if (!toBeRead) touched = true;
+            else StartCoroutine(nameof(readWait));
         }
+    }
+
+    private IEnumerator readWait()
+    {
+        isReading = true;
+        yield return new WaitForSecondsRealtime(4.0f);
+        isReading = false;
     }
 }

@@ -29,6 +29,9 @@ public class MainMenu : MonoBehaviour
     private List<Button> btns;
     private List<Vector3> btnPos;
 
+    public AudioSource sfxSource;
+    public AudioClip[] audioClips;
+
     private void Awake()
     {
         Time.timeScale = 1.0f;
@@ -58,11 +61,14 @@ public class MainMenu : MonoBehaviour
             btnPos.Add(b.transform.localPosition);
         }
 
+        audioClips = Resources.LoadAll<AudioClip>("Audio/SFX");
+
         levelChoosePage.SetActive(false);
         startBtn.onClick.AddListener(() =>
         {
             if (levelChoosePage.activeInHierarchy)
             {
+                sfxPlay(7);
                 for (int i = 0; i < 4; i++)
                 {
                     btns[i].GetComponent<FloatingTitle>().enabled = false;
@@ -73,6 +79,7 @@ public class MainMenu : MonoBehaviour
             }
             else
             {
+                sfxPlay(4);
                 for (int i = 0; i < 4; i++)
                 {
                     btns[i].transform.localPosition = Vector3.zero;
@@ -90,7 +97,7 @@ public class MainMenu : MonoBehaviour
 
         ExitBtn.onClick.AddListener(() =>
         {
-
+            sfxPlay(0);
             loadMask.SetActive(true);
             loadMask.transform.DOScale(1.0f, 1.0f).OnComplete(() => {
 #if UNITY_EDITOR
@@ -124,9 +131,11 @@ public class MainMenu : MonoBehaviour
 
         languageBtn.onClick.AddListener(() =>
         {
-            if(GameManager.language == GameManager.Language.EN)
+            sfxPlay(4);
+            if (GameManager.language == GameManager.Language.EN)
                 GameManager.language = GameManager.Language.CH;
-            else GameManager.language = GameManager.Language.EN;
+            else
+                GameManager.language = GameManager.Language.EN; 
             loadMask.SetActive(true);
             loadMask.transform.DOScale(1.0f, 1.0f).OnComplete(() => {
                 SceneManager.LoadScene(0);
@@ -157,6 +166,7 @@ public class MainMenu : MonoBehaviour
 
         level0Btn.onClick.AddListener(() =>
         {
+            sfxPlay(0);
             loadMask.SetActive(true);
             loadMask.transform.DOScale(1.0f, 1.0f).OnComplete(() => {
                 SceneManager.LoadScene(1);
@@ -164,6 +174,7 @@ public class MainMenu : MonoBehaviour
         });
         level1Btn.onClick.AddListener(() =>
         {
+            sfxPlay(0);
             loadMask.SetActive(true);
             loadMask.transform.DOScale(1.0f, 1.0f).OnComplete(() => {
                 SceneManager.LoadScene(2);
@@ -171,6 +182,7 @@ public class MainMenu : MonoBehaviour
         });
         level2Btn.onClick.AddListener(() =>
         {
+            sfxPlay(0);
             loadMask.SetActive(true);
             loadMask.transform.DOScale(1.0f, 1.0f).OnComplete(() => {
                 SceneManager.LoadScene(3);
@@ -178,13 +190,21 @@ public class MainMenu : MonoBehaviour
         });
         level3Btn.onClick.AddListener(() =>
         {
+            sfxPlay(0);
             loadMask.SetActive(true);
             loadMask.transform.DOScale(1.0f, 1.0f).OnComplete(() => {
                 SceneManager.LoadScene(4);
             });
         });
 
+        face.GetComponent<Button>().onClick.AddListener(() =>
+        {
+            sfxPlay(Random.Range(4, 7));
+        });
+
+
         GetComponent<AudioSource>().volume = GameManager.audioVolume;
+        sfxSource.volume = GameManager.sfxVolume;
     }
 
     private void Update()
@@ -200,5 +220,11 @@ public class MainMenu : MonoBehaviour
                 b.transform.position) / 2);
             b.GetComponent<LineRenderer>().SetPosition(0, b.transform.position);
         }
+    }
+
+    private void sfxPlay(int sfxID)
+    {
+        sfxSource.clip = audioClips[sfxID];
+        sfxSource.Play();
     }
 }

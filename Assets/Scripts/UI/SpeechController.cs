@@ -26,14 +26,14 @@ public class SpeechController : MonoBehaviour
             speechBoard.SetActive(false);
             readingBoard.SetActive(true);
             readingBoard.transform.DOShakeScale(.1f, 0.5f, 8, 45.0f).OnComplete(() =>
-            readingBoard.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f));
+            readingBoard.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f));
         }
         else
         {
             readingBoard.SetActive(false);
             speechBoard.SetActive(true);
             speechBoard.transform.DOShakeScale(.1f, 0.5f, 8, 45.0f).OnComplete(() =>
-            speechBoard.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f));
+            speechBoard.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f));
         }
         StartCoroutine(nameof(speeching));
     }
