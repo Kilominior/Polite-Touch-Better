@@ -260,7 +260,11 @@ public class SystemMenuController: MonoBehaviour
         NextLevelBtn.onClick.AddListener(() =>
         {
             AudioPlay(0);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            OnResume();
+            LoadMask.SetActive(true);
+            LoadMask.transform.DOScale(1.0f, 1.0f).OnComplete(() => {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            });
         });
 
 
