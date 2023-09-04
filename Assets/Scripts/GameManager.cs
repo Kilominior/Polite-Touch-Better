@@ -44,8 +44,8 @@ public static class GameManager
         if (!File.Exists(Application.persistentDataPath + "/PTBSave.sav"))
         {
             levelProgress = 1;
-            audioVolume = 0.8f;
-            sfxVolume = 0.6f;
+            audioVolume = 0.6f;
+            sfxVolume = 0.4f;
             language = Language.CH;
             Debug.Log("<存档读取>:已创建新存档.");
             return;

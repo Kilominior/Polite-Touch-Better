@@ -151,6 +151,9 @@ public class SystemMenuController: MonoBehaviour
                 case 4:
                     TitleText1.text = "Levels all clear!\nThank you for playing the game! Soon there will be more levels!";
                     break;
+                default:
+                    TitleText1.text = "Level clear!\nJust move on!";
+                    break;
             }
             //MenuText1.text = "You Finished Level" + SceneManager.GetActiveScene().buildIndex
             //    + "! \nHe Should Be Grateful!";
@@ -196,6 +199,9 @@ public class SystemMenuController: MonoBehaviour
                     break;
                 case 4:
                     TitleText1.text = "到这里就通关啦！\n感谢游玩！后续还会有更多关卡加入，敬请期待！";
+                    break;
+                default:
+                    TitleText1.text = "过关啦！\n我们继续前进吧！";
                     break;
             }
             //MenuText1.text = "恭喜通过第" + SceneManager.GetActiveScene().buildIndex
