@@ -46,12 +46,12 @@ public static class GameManager
             levelProgress = 1;
             audioVolume = 0.6f;
             sfxVolume = 0.4f;
-            language = Language.CH;
-            Debug.Log("<´æµµ¶ÁÈ¡>:ÒÑ´´½¨ÐÂ´æµµ.");
+            language = Language.EN;
+            Debug.Log("<ï¿½æµµï¿½ï¿½È¡>:ï¿½Ñ´ï¿½ï¿½ï¿½ï¿½Â´æµµ.");
             return;
         }
 
-        //Ê¹ÓÃÎÄ¼þÁ÷·´ÐòÁÐ»¯ÎÄ¼þÐÅÏ¢£¬½«Æä´æÈëSaveData£¬×îºó´æ»ØGameManager
+        //Ê¹ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð»ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½SaveDataï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½GameManager
         BinaryFormatter BF = new BinaryFormatter();
         FileStream FS = File.Open(Application.persistentDataPath + "/PTBSave.sav", FileMode.Open);
         saveData = BF.Deserialize(FS) as SaveData;
@@ -60,12 +60,12 @@ public static class GameManager
         AudioVolume = saveData.audioVolume;
         SfxVolume = saveData.sfxVolume;
         gameLanguage = saveData.language;
-        Debug.Log("<´æµµ¶ÁÈ¡>:´æµµ¶ÁÈ¡Íê±Ï.");
+        Debug.Log("<ï¿½æµµï¿½ï¿½È¡>:ï¿½æµµï¿½ï¿½È¡ï¿½ï¿½ï¿½.");
     }
     /*
     public static void SaveOnCurrent()
     {
-    // ¸´ÔÓÊý¾Ý±ØÐëµ÷ÓÃ´Ë±£´æ·½·¨£¬Íæ¼ÒÖ÷¶¯±£´æ
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý±ï¿½ï¿½ï¿½ï¿½ï¿½Ã´Ë±ï¿½ï¿½æ·½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     }*/
 
     public static void SaveDataReset()
@@ -81,12 +81,12 @@ public static class GameManager
         }
         else saveData.GameSave(levelProgress, audioVolume, sfxVolume, language);
 
-        //Ê¹ÓÃÎÄ¼þÁ÷´´½¨ÎÄ¼þ£¬²¢½«·â×°ºóµÄÊý¾ÝÐòÁÐ»¯´æÈëÎÄ¼þÖÐ
+        //Ê¹ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
         BinaryFormatter BF = new BinaryFormatter();
         FileStream FS = File.Create(Application.persistentDataPath + "/PTBSave.sav");
         BF.Serialize(FS, saveData);
         FS.Close();
-        Debug.Log("<ÓÎÏ·±£´æ>:Ð¡Êý¾Ý×Ô¶¯±£´æ.");
+        Debug.Log("<ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ï¿½>:Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½.");
     }
 }
 

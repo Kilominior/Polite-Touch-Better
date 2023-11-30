@@ -75,8 +75,8 @@ public class HandFollower : MonoBehaviour
         modeChangeBtn.image.sprite = mode1;
         if (gameLanguage == GameManager.Language.CH)
         {
-            modeNowText.text = "ÎŞÀíÂÒÅö: »ÃÖ«µ¯·É";
-            modeNowText1.text = "ÎŞÀíÂÒÅö: »ÃÖ«µ¯·É";
+            modeNowText.text = "æ— ç†ä¹±ç¢°ï¼šå¹»è‚¢å¼¹é£";
+            modeNowText1.text = "æ— ç†ä¹±ç¢°ï¼šå¹»è‚¢å¼¹é£";
         }
         else
         {
@@ -95,8 +95,8 @@ public class HandFollower : MonoBehaviour
         modeChangeBtn.image.sprite = mode2;
         if (gameLanguage == GameManager.Language.CH)
         {
-            modeNowText.text = "³ÏÒâÇá¸§: »ÃÖ«ËÉÊÖ";
-            modeNowText1.text = "³ÏÒâÇá¸§: »ÃÖ«ËÉÊÖ";
+            modeNowText.text = "è¯šæ„è½»æŠšï¼šå¹»è‚¢æ¾å¼€";
+            modeNowText1.text = "è¯šæ„è½»æŠšï¼šå¹»è‚¢æ¾å¼€";
         }
         else
         {
@@ -107,11 +107,11 @@ public class HandFollower : MonoBehaviour
             d.GetComponent<SpriteRenderer>().sprite = DirSprites[1];
     }
 
-    /*//ÍÏ×§¹¦ÄÜµÄÊµÏÖ£¬¸Ãº¯Êı¿ÉÓ¦ÓÃµ½ÈÎºÎ½Å±¾ÖĞ
+    /*//ï¿½ï¿½×§ï¿½ï¿½ï¿½Üµï¿½Êµï¿½Ö£ï¿½ï¿½Ãºï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½Ãµï¿½ï¿½ÎºÎ½Å±ï¿½ï¿½ï¿½
     IEnumerator OnMouseDown()
     {
-        Vector3 screenSpace = Camera.main.WorldToScreenPoint(transform.position);//ÈıÎ¬ÎïÌå×ø±ê×ªÆÁÄ»×ø±ê
-                                                                                 //½«Êó±êÆÁÄ»×ø±ê×ªÎªÈıÎ¬×ø±ê£¬ÔÙ¼ÆËãÎïÌåÎ»ÖÃÓëÊó±êÖ®¼äµÄ¾àÀë
+        Vector3 screenSpace = Camera.main.WorldToScreenPoint(transform.position);//ï¿½ï¿½Î¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½Ä»ï¿½ï¿½ï¿½ï¿½
+                                                                                 //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½ï¿½ï¿½×ªÎªï¿½ï¿½Î¬ï¿½ï¿½ï¿½ê£¬ï¿½Ù¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö®ï¿½ï¿½Ä¾ï¿½ï¿½ï¿½
         var offset = transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenSpace.z));
         while (Input.GetMouseButton(0))
         {

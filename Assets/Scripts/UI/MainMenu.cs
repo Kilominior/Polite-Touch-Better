@@ -101,21 +101,21 @@ public class MainMenu : MonoBehaviour
             loadMask.SetActive(true);
             loadMask.transform.DOScale(1.0f, 1.0f).OnComplete(() => {
 #if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;//Èç¹ûÊÇÔÚunity±àÒëÆ÷ÖĞ
+                UnityEditor.EditorApplication.isPlaying = false;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½unityï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 #else
-            Application.Quit();//·ñÔòÔÚ´ò°üÎÄ¼şÖĞ
+            Application.Quit();//ï¿½ï¿½ï¿½ï¿½ï¿½Ú´ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
 #endif
             });
         });
 
         if(GameManager.language == GameManager.Language.CH)
         {
-            startText0.text = "¹Ø¿¨Ñ¡Ôñ";
-            startText1.text = "¹Ø¿¨Ñ¡Ôñ";
-            exitText0.text = "ÍË³öÓÎÏ·";
-            exitText1.text = "ÍË³öÓÎÏ·";
-            languageText0.text = "ÖĞÎÄ/English";
-            languageText1.text = "ÖĞÎÄ/English";
+            startText0.text = "å…³å¡é€‰æ‹©";
+            startText1.text = "å…³å¡é€‰æ‹©";
+            exitText0.text = "é€€å‡ºæ¸¸æˆ";
+            exitText1.text = "é€€å‡ºæ¸¸æˆ";
+            languageText0.text = "ä¸­æ–‡/English";
+            languageText1.text = "ä¸­æ–‡/English";
             titleImage.sprite = titleCH;
         }
         else if(GameManager.language == GameManager.Language.EN)
@@ -124,8 +124,8 @@ public class MainMenu : MonoBehaviour
             startText1.text = "Levels";
             exitText0.text = "Exit";
             exitText1.text = "Exit";
-            languageText0.text = "English/ÖĞÎÄ";
-            languageText1.text = "English/ÖĞÎÄ";
+            languageText0.text = "English/ä¸­æ–‡";
+            languageText1.text = "English/ä¸­æ–‡";
             titleImage.sprite = titleEN;
         }
 

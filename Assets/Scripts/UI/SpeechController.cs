@@ -12,7 +12,7 @@ public class SpeechController : MonoBehaviour
     public MainBodyController mainBody;
     private float speechTime = 4.0f;
 
-    // Ëµ»°·½·¨
+    // Ëµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public void speech(string sText, int faceChangeTo = 0, bool isReading = false)
     {
         StopCoroutine(nameof(speeching));
