@@ -1,4 +1,4 @@
-# Polite Touch Permitted 非诚勿触
+# Polite Touch Better 非诚勿触
 
 A game developed by myself (except of some art resources, thanks to Wu my partner) with **unity 2021.3.7f1c1**.
 
